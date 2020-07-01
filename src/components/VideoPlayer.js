@@ -1,9 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 const VideoPlayer = ({ src, ...props }) => {
+  const video =  useRef();
+
+  const toggleFullscreen = () => {
+    const [screen, setScreen] = useState(false);
+
+    if (!document.fullscreenElement) {
+      video.requestFullscreen().catch(err => {
+        alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  }
+
+
   return (
     <div>
-      <video autoPlay src={src} {...props} style={{ pointerEvents: 'none' }} />
+      <video autoPlay src={src} ref={video} {...props} style={{ pointerEvents: 'none' }} />
       <div className='player-buttons'>
         <button className='btn'>
           <i className='fas fa-play'> </i>
@@ -14,7 +29,7 @@ const VideoPlayer = ({ src, ...props }) => {
         00:00
         <input className='slider-playback' type='range' />
         00:00
-        <button className='btn'>
+        <button className='btn' onClick={toggleFullscreen}>
           <i class='fas fa-expand'> </i>
         </button>
       </div>
