@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 const VideoPlayer = ({ src, ...props }) => {
   const video =  useRef();
@@ -6,12 +6,14 @@ const VideoPlayer = ({ src, ...props }) => {
   const toggleFullscreen = () => {
     const [screen, setScreen] = useState(false);
 
-    if (!document.fullscreenElement) {
+    if (screen = false) {
       video.requestFullscreen().catch(err => {
         alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+        setScreen = true;
       });
     } else {
       document.exitFullscreen();
+      setScreen = false;
     }
   }
 
